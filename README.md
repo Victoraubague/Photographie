@@ -1,4 +1,4 @@
-Description
+
 Bienvenue sur mon projet de présensation de photographie ! Ce projet est une démonstration de mes compétences en développement web, mettant en avant un slider interactif accompagné d'icônes de réseaux sociaux stylisées. Ce site est spécialement conçu pour les photographes souhaitant présenter leurs œuvres de manière élégante et professionnelle.
 
 Fonctionnalités
