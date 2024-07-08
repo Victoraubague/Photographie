@@ -1,0 +1,274 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap'); /* Nouvelle police pour le titre */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap'); /* Nouvelle police pour les icônes */
+@charset "UTF-8";
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  position: relative;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 3vmin;
+  background: #151515;
+  color: #fff;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 50px; /* Réduit l'espace en bas de la page */
+}
+
+header {
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  background: #222; /* Changement de la couleur de fond pour un meilleur contraste */
+  position: fixed;
+  top: 0;
+  z-index: 10;
+}
+
+header h1 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 3rem; /* Réduction de la taille de la police */
+  margin: 0;
+  color: #fff;
+}
+
+.slides {
+  display: grid;
+  margin-top: 60px; /* Pour ne pas être caché derrière le header */
+}
+.slides > .slide {
+  grid-area: 1/-1;
+}
+.slides > button {
+  appearance: none;
+  background: transparent;
+  border: none;
+  color: white;
+  position: absolute;
+  font-size: 5rem;
+  width: 5rem;
+  height: 5rem;
+  top: 30%;
+  transition: opacity 0.3s;
+  opacity: 0.7;
+  z-index: 5;
+}
+.slides > button:hover {
+  opacity: 1;
+}
+.slides > button:focus {
+  outline: none;
+}
+.slides > button:first-child {
+  left: -50%;
+}
+.slides > button:last-child {
+  right: -50%;
+}
+
+.slideContent {
+  width: 30vw;
+  height: 40vw;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transition: transform 0.5s ease-in-out;
+  opacity: 0.7;
+  display: grid;
+  align-content: center;
+  transform-style: preserve-3d;
+  transform: perspective(1000px) translateX(calc(100% * var(--offset))) rotateY(calc(-45deg * var(--dir)));
+}
+
+.slideContentInner {
+  transform-style: preserve-3d;
+  transform: translateZ(2rem);
+  transition: opacity 0.3s linear;
+  text-shadow: 0 0.1rem 1rem #000;
+  opacity: 0;
+}
+.slideContentInner .slideSubtitle,
+.slideContentInner .slideTitle {
+  font-size: 2rem;
+  font-weight: normal;
+  letter-spacing: 0.2ch;
+  text-transform: uppercase;
+  margin: 0;
+}
+.slideContentInner .slideSubtitle::before {
+  content: "— ";
+}
+.slideContentInner .slideDescription {
+  margin: 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.2ch;
+}
+
+.slideBackground {
+  position: fixed;
+  top: 0;
+  left: -10%;
+  right: -10%;
+  bottom: 0;
+  background-size: cover;
+  background-position: center center;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s linear, transform 0.3s ease-in-out;
+  pointer-events: none;
+  transform: translateX(calc(10% * var(--dir)));
+}
+
+.slide[data-active] {
+  z-index: 2;
+  pointer-events: auto;
+}
+.slide[data-active] .slideBackground {
+  opacity: 0.2;
+  transform: none;
+}
+.slide[data-active] .slideContentInner {
+  opacity: 1;
+}
+.slide[data-active] .slideContent {
+  --x: calc(var(--px) - 0.5);
+  --y: calc(var(--py) - 0.5);
+  opacity: 1;
+  transform: perspective(1000px);
+}
+.slide[data-active] .slideContent:hover {
+  transition: none;
+  transform: perspective(1000px) rotateY(calc(var(--x) * 45deg)) rotateX(calc(var(--y) * -45deg));
+}
+
+.icons {
+  position: absolute;
+  left: 50%;
+  bottom: 40px; /* Ajuste la marge en bas de la page */
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: row; /* Aligne les icônes horizontalement */
+  gap: 20px; /* Espace entre les icônes */
+  z-index: 10; /* Place les icônes devant le slider */
+}
+.icons a {
+  text-decoration: none;
+  color: #fff;
+  display: block;
+  position: relative;
+  font-family: 'Roboto Condensed', sans-serif; /* Applique la nouvelle police */
+  font-weight: 700; /* Police en gras */
+}
+.icons a .layer {
+  width: 55px;
+  height: 55px;
+  transition: transform 0.3s, background-color 0.3s, border-color 0.3s;
+  background-color: #fff; /* Ajoute une couleur de fond */
+  border: 2px solid #fff; /* Ajoute une bordure */
+  border-radius: 5px;
+}
+.icons a:hover .layer {
+  transform: rotate(-35deg) skew(20deg);
+  background-color: #000; /* Change la couleur de fond au survol */
+  border-color: #000; /* Change la couleur de la bordure au survol */
+}
+.icons a .layer span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+.icons a .layer span.fab {
+  font-size: 30px;
+  line-height: 55px;
+  text-align: center;
+}
+.icons a:hover .layer span:nth-child(1) {
+  opacity: 0.2;
+}
+.icons a:hover .layer span:nth-child(2) {
+  opacity: 0.4;
+  transform: translate(5px, -5px);
+}
+.icons a:hover .layer span:nth-child(3) {
+  opacity: 0.6;
+  transform: translate(10px, -10px);
+}
+.icons a:hover .layer span:nth-child(4) {
+  opacity: 0.8;
+  transform: translate(15px, -15px);
+}
+.icons a:hover .layer span:nth-child(5) {
+  opacity: 1;
+  transform: translate(20px, -20px);
+}
+.icons a:nth-child(1) .layer span,
+.icons a:nth-child(1) .text {
+  color: #4267B2; /* Couleur Facebook */
+  border-color: #4267B2;
+}
+.icons a:nth-child(2) .layer span,
+.icons a:nth-child(2) .text {
+  color: #1DA1F2; /* Couleur Twitter */
+  border-color: #1DA1F2;
+}
+.icons a:nth-child(3) .layer span,
+.icons a:nth-child(3) .text {
+  color: #E1306C; /* Couleur Instagram */
+  border-color: #E1306C;
+}
+.icons a:nth-child(4) .layer span,
+.icons a:nth-child(4) .text {
+  color: #2867B2; /* Couleur LinkedIn */
+  border-color: #2867B2;
+}
+.icons a:nth-child(5) .layer span,
+.icons a:nth-child(5) .text {
+  color: #ff0000; /* Couleur YouTube */
+  border-color: #ff0000;
+}
+.icons a:hover:nth-child(1) .layer span {
+  box-shadow: 0 0 10px #4267B2;
+}
+.icons a:hover:nth-child(2) .layer span {
+  box-shadow: 0 0 10px #1DA1F2;
+}
+.icons a:hover:nth-child(3) .layer span {
+  box-shadow: 0 0 10px #E1306C;
+}
+.icons a:hover:nth-child(4) .layer span {
+  box-shadow: 0 0 10px #2867B2;
+}
+.icons a:hover:nth-child(5) .layer span {
+  box-shadow: 0 0 10px #ff0000;
+}
+.icons a .text {
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  opacity: 0;
+  font-weight: 700;
+  transform: translateX(-50%);
+  transition: bottom 0.3s ease, opacity 0.3s ease;
+}
+.icons a:hover .text {
+  bottom: -35px;
+  opacity: 1;
+}
